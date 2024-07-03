@@ -16,7 +16,7 @@ if ($conn->connect_error) {
     die("Erro na conexão com o banco de dados: " . $conn->connect_error);
 }
 
-$sql = "SELECT id, nome, numero_serie, categoria, data_aquisicao, status, marca, modelo FROM equipamentos";
+$sql = "SELECT id, nome, numero_serie, categoria, data_aquisicao, status FROM equipamentos";
 $result = $conn->query($sql);
 ?>
 
@@ -27,15 +27,15 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciamento de Inventário</title>
     <link rel="stylesheet" href="styles/inventario.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Gerenciamento de Inventário</h1>
+            <h1>Inventário de Equipamentos</h1>
         </header>
         <div class="menu">
             <button onclick="window.location.href='adicionar_equipamento.php'">Adicionar Equipamento</button>
+            <button onclick="window.location.href='chamados.php'">Ir para Chamados</button>
             <button onclick="window.location.href='logout.php'">Sair</button>
         </div>
         <table>
@@ -47,8 +47,6 @@ $result = $conn->query($sql);
                     <th>Categoria</th>
                     <th>Data de Aquisição</th>
                     <th>Status</th>
-                    <th>Marca</th>
-                    <th>Modelo</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -62,40 +60,19 @@ $result = $conn->query($sql);
                             <td><?php echo $row["categoria"]; ?></td>
                             <td><?php echo $row["data_aquisicao"]; ?></td>
                             <td><?php echo $row["status"]; ?></td>
-                            <td><?php echo $row["marca"]; ?></td>
-                            <td><?php echo $row["modelo"]; ?></td>
                             <td>
-                                <form action="inventario.php" method="POST" class="delete-form">
-                                    <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                    <input type="hidden" name="confirm_delete" value="1">
-                                    <button type="submit" class="delete-button"><i class="fas fa-times"></i></button>
-                                </form>
+                                <a href="excluir_equipamento.php?id=<?php echo $row['id']; ?>" class="delete">❌</a>
                             </td>
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="9">Nenhum equipamento encontrado</td>
+                        <td colspan="7">Nenhum equipamento encontrado</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
         </table>
     </div>
-
-    <?php if (isset($_POST['confirm_delete'])): ?>
-    <div class="popup">
-        <div class="popup-content">
-            <h2>Confirmar Exclusão</h2>
-            <p>Tem certeza de que deseja excluir este item?</p>
-            <form action="excluir_equipamento.php" method="POST">
-                <input type="hidden" name="id" value="<?php echo $_POST['id']; ?>">
-                <button type="submit" name="delete" class="btn-confirm">Confirmar</button>
-                <button type="submit" name="cancel" class="btn-cancel">Cancelar</button>
-            </form>
-        </div>
-    </div>
-    <?php endif; ?>
-
 </body>
 </html>
 
