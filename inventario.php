@@ -36,7 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -87,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         echo "<td>" . $row["nome"] . "</td>";
                         echo "<td>" . $row["numero_serie"] . "</td>";
                         echo "<td>" . $row["categoria"] . "</td>";
-                        echo "<td>" . $row["data_aquisicao"] . "</td>";
+                        echo "<td>" . date("d/m/Y", strtotime($row["data_aquisicao"])) . "</td>";
                         echo "<td>" . $row["status"] . "</td>";
                         echo "<td>" . $row["usuario"] . "</td>";
                         echo "<td>";
