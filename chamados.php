@@ -4,9 +4,8 @@ if (!isset($_SESSION['usuario'])) {
     header("Location: index.html");
     exit();
 }
-// linhas 3 a 6 - verifica se a variável usuario está definida. Caso não esteja, redireciona o usuário novamente a página de login e
+// linhas 3 a 6 - verifica se a variável usuario está definida. Caso não esteja, redireciona o usuário novamente a página de login e encerra a conexão com banco de dados
 
-//conexão com banco de dados
 //define as variáveis de conexão com banco de dados: servidor, usuário, senha e nome do banco
 $servername = "localhost";
 $username = "root";
