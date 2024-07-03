@@ -79,7 +79,7 @@ $result = $conn->query($sql);
                             <td><?php echo $row["id"]; ?></td>
                             <td><?php echo $row["titulo"]; ?></td>
                             <td><?php echo $row["status"]; ?></td>
-                            <td><?php echo $row["data_criacao"]; ?></td>
+                            <td><?php echo date("d/m/Y H:i:s", strtotime($row["data_criacao"])); ?></td>
                             <td><?php echo ucfirst($row["modulo"]); ?></td>
                             <td><?php echo $row["usuario"]; ?></td>
                             <td><?php echo $row["setor"]; ?></td>
