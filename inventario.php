@@ -10,33 +10,33 @@ $username = "root";
 $password = "";
 $dbname = "PROJETO_FACUL";
 
+// Criando a conexão
 $conn = new mysqli($servername, $username, $password, $dbname);
 
+// Verificando a conexão
 if ($conn->connect_error) {
     die("Erro na conexão com o banco de dados: " . $conn->connect_error);
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
-    $id = intval($_POST['id']);
-    $sql = "DELETE FROM equipamentos WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $stmt->close();
-    header("Location: inventario.php");
-    exit();
-}
-
-$sql = "SELECT id, nome, numero_serie, categoria, data_aquisicao, status FROM equipamentos";
-$result = $conn->query($sql);
-
+$message = "";
 $showConfirmation = false;
-$equipmentToDelete = null;
+$deleteId = "";
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['confirm_delete'])) {
-    $showConfirmation = true;
-    $equipmentToDelete = intval($_GET['confirm_delete']);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["delete_id"])) {
+        $deleteId = $_POST["delete_id"];
+        $showConfirmation = true;
+    } elseif (isset($_POST["confirm_delete"])) {
+        $id = $_POST["confirm_delete"];
+        $sql = "DELETE FROM equipamentos WHERE id = $id";
+        if ($conn->query($sql) === TRUE) {
+            $message = "Equipamento excluído com sucesso.";
+        } else {
+            $message = "Erro ao excluir o equipamento: " . $conn->error;
+        }
+    }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -44,18 +44,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['confirm_delete'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciamento de Inventário</title>
+    <title>Inventário de Equipamentos</title>
     <link rel="stylesheet" href="styles/inventario.css">
 </head>
 <body>
-    <header>
-        <h1>Gerenciamento de Inventário</h1>
-        <div class="menu">
-            <button onclick="window.location.href='chamados.php'">Chamados</button>
-            <button onclick="window.location.href='adicionar_equipamento.php'">Adicionar Equipamento</button>
-        </div>
-    </header>
     <div class="container">
+        <header>
+            <h1>Inventário de Equipamentos</h1>
+        </header>
+        <div class="menu">
+            <button onclick="window.location.href='adicionar_equipamento.php'">Adicionar Equipamento</button>
+            <button onclick="window.location.href='chamados.php'">Gerenciamento de Chamados</button>
+            <button onclick="window.location.href='logout.php'">Sair</button>
+        </div>
+
+        <?php if ($message): ?>
+            <div class="alert"><?php echo $message; ?></div>
+        <?php endif; ?>
+
         <table>
             <thead>
                 <tr>
@@ -65,47 +71,54 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['confirm_delete'])) {
                     <th>Categoria</th>
                     <th>Data de Aquisição</th>
                     <th>Status</th>
+                    <th>Usuário</th>
                     <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
-                <?php if ($result->num_rows > 0): ?>
-                    <?php while($row = $result->fetch_assoc()): ?>
-                        <tr>
-                            <td><?php echo $row["id"]; ?></td>
-                            <td><?php echo $row["nome"]; ?></td>
-                            <td><?php echo $row["numero_serie"]; ?></td>
-                            <td><?php echo $row["categoria"]; ?></td>
-                            <td><?php echo $row["data_aquisicao"]; ?></td>
-                            <td><?php echo $row["status"]; ?></td>
-                            <td>
-                                <a href="inventario.php?confirm_delete=<?php echo $row['id']; ?>" class="delete">&times;</a>
-                            </td>
-                        </tr>
-                    <?php endwhile; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="7">Nenhum equipamento encontrado</td>
-                    </tr>
-                <?php endif; ?>
+                <?php
+                $sql = "SELECT * FROM equipamentos";
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . $row["id"] . "</td>";
+                        echo "<td>" . $row["nome"] . "</td>";
+                        echo "<td>" . $row["numero_serie"] . "</td>";
+                        echo "<td>" . $row["categoria"] . "</td>";
+                        echo "<td>" . $row["data_aquisicao"] . "</td>";
+                        echo "<td>" . $row["status"] . "</td>";
+                        echo "<td>" . $row["usuario"] . "</td>";
+                        echo "<td>";
+                        echo "<a href='editar_equipamento.php?id=" . $row["id"] . "'>✏️</a> ";
+                        echo "<form method='POST' action='' style='display:inline;'>";
+                        echo "<input type='hidden' name='delete_id' value='" . $row["id"] . "'>";
+                        echo "<button type='submit' style='background:none;border:none;color:red;'>🗑️</button>";
+                        echo "</form>";
+                        echo "</td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='8'>Nenhum equipamento encontrado.</td></tr>";
+                }
+                ?>
             </tbody>
         </table>
-    </div>
 
-    <?php if ($showConfirmation): ?>
-        <div class="popup-container">
-            <div class="popup">
-                <h2>Confirmar Exclusão</h2>
-                <p>Tem certeza que deseja excluir este equipamento?</p>
-                <form method="post" action="inventario.php">
-                    <input type="hidden" name="id" value="<?php echo $equipmentToDelete; ?>">
-                    <button type="submit" class="confirm">Confirmar</button>
-                    <button type="button" class="cancel" onclick="window.location.href='inventario.php'">Cancelar</button>
-                </form>
+        <?php if ($showConfirmation): ?>
+            <div class="overlay">
+                <div class="confirmation-box">
+                    <p>Tem certeza que deseja excluir este equipamento?</p>
+                    <form method="POST" action="">
+                        <input type="hidden" name="confirm_delete" value="<?php echo $deleteId; ?>">
+                        <button type="button" onclick="window.location.href='inventario.php'">Cancelar</button>
+                        <button type="submit">Confirmar</button>
+                    </form>
+                </div>
             </div>
-        </div>
-    <?php endif; ?>
-
+        <?php endif; ?>
+    </div>
 </body>
 </html>
 

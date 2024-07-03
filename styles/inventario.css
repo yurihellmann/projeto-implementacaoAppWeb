@@ -26,26 +26,24 @@ header h1 {
 }
 
 .menu {
-    margin: 20px 0;
     text-align: center;
+    margin: 20px 0;
 }
 
-.menu button {
-    display: inline-block;
-    text-decoration: none;
+button {
     background-color: #6CA80C;
     color: #fff;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
-    margin: 5px;
     border-radius: 4px;
     font-size: 14px;
     font-weight: 600;
     transition: all linear 160ms;
+    margin: 5px;
 }
 
-.menu button:hover {
+button:hover {
     transform: scale(1.05);
     background-color: #6CA80C;
 }
@@ -53,15 +51,16 @@ header h1 {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
-    background-color: #fff;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 7px;
+    box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.4);
 }
 
 table th, table td {
     padding: 10px;
     border: 1px solid #ddd;
-    text-align: left;
+    text-align: center;
 }
 
 table th {
@@ -73,81 +72,70 @@ table tr:hover {
     background-color: #f5f5f5;
 }
 
-table tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+.alert {
+    color: #D8000C;
+    background-color: #FFD2D2;
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px solid #D8000C;
+    border-radius: 5px;
+    text-align: center;
+    max-width: 800px;
 }
 
-table tr:last-of-type {
-    border-bottom: 2px solid #f2f2f2;
-}
-
-table td .delete {
-    color: red;
+a {
     text-decoration: none;
+    color: inherit;
     font-size: 20px;
-    border: none;
-    background: none;
+}
+
+button[type="submit"] {
+    font-size: 20px;
     cursor: pointer;
 }
 
-.popup-container {
+.overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 }
 
-.popup {
-    background-color: #fff;
+.confirmation-box {
+    background: #fff;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 7px;
     text-align: center;
-    width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }
 
-.popup h2 {
-    margin-top: 0;
-}
-
-.popup p {
-    margin: 20px 0;
-}
-
-.popup button {
+.confirmation-box button {
+    background-color: #6CA80C;
+    color: #fff;
+    border: none;
     padding: 10px 20px;
-    margin: 0 10px;
+    cursor: pointer;
     border-radius: 4px;
     font-size: 14px;
     font-weight: 600;
-    cursor: pointer;
     transition: all linear 160ms;
+    margin: 5px;
 }
 
-.popup .confirm {
-    background-color: #6CA80C;
-    color: #fff;
-    border: none;
-    float: right;
+.confirmation-box button[type="button"] {
+    background-color: #d9534f;
 }
 
-.popup .confirm:hover {
+.confirmation-box button[type="button"]:hover {
+    background-color: #c9302c;
+}
+
+.confirmation-box button:hover {
     transform: scale(1.05);
-    background-color: #6CA80C;
-}
-
-.popup .cancel {
-    background-color: #dc3545;
-    color: #fff;
-    border: none;
-    float: left;
-}
-
-.popup .cancel:hover {
-    transform: scale(1.05);
-    background-color: #c82333;
+    background-color: #5b8c0c;
 }

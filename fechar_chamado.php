@@ -16,22 +16,24 @@ if ($conn->connect_error) {
     die("Erro na conexão com o banco de dados: " . $conn->connect_error);
 }
 
+$chamadoId = isset($_GET['id']) ? $_GET['id'] : '';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $chamado_id = $_POST['id'];
-    $descricao_encerramento = $_POST['descricao_encerramento'];
+    $id = $_POST['id'];
+    $descricao_encerramento = $conn->real_escape_string($_POST['descricao_encerramento']);
+    $sql = "UPDATE chamados SET status='Fechado', descricao_encerramento='$descricao_encerramento' WHERE id=$id";
 
-    $sql = "UPDATE chamados SET status = 'Fechado', descricao_encerramento = ? WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("si", $descricao_encerramento, $chamado_id);
-    $stmt->execute();
-    $stmt->close();
-    $conn->close();
-
-    header("Location: chamados.php");
-    exit();
-} else {
-    $chamado_id = $_GET['id'];
+    if ($conn->query($sql) === TRUE) {
+        header("Location: chamados.php");
+        exit();
+    } else {
+        echo "Erro ao fechar o chamado: " . $conn->error;
+    }
 }
+
+$sql = "SELECT id, titulo, descricao FROM chamados WHERE id = $chamadoId";
+$result = $conn->query($sql);
+$chamado = $result->fetch_assoc();
 
 $conn->close();
 ?>
@@ -47,17 +49,27 @@ $conn->close();
 <body>
     <div class="container">
         <header>
-            <h1>Encerrar Chamado</h1>
+            <h1>Fechar Chamado</h1>
         </header>
-        <form action="fechar_chamado.php" method="post">
-            <input type="hidden" name="id" value="<?php echo $chamado_id; ?>">
-            <div class="form-group">
+        <div class="form-container">
+            <form action="fechar_chamado.php" method="POST">
+                <input type="hidden" name="id" value="<?php echo $chamado['id']; ?>">
+
+                <label for="titulo">Título:</label>
+                <input type="text" id="titulo" name="titulo" value="<?php echo $chamado['titulo']; ?>" disabled>
+
+                <label for="descricao">Descrição:</label>
+                <textarea id="descricao" name="descricao" rows="4" disabled><?php echo $chamado['descricao']; ?></textarea>
+
                 <label for="descricao_encerramento">Descrição do Encerramento:</label>
-                <textarea name="descricao_encerramento" id="descricao_encerramento" rows="5" required></textarea>
-            </div>
-            <input type="submit" value="Encerrar Chamado">
-        </form>
-        <button onclick="window.location.href='ver_chamado.php?id=<?php echo $chamado_id; ?>'">Cancelar</button>
+                <textarea id="descricao_encerramento" name="descricao_encerramento" rows="4" required></textarea>
+
+                <div class="buttons">
+                    <button type="button" class="btn-cancelar" onclick="window.history.back();">Cancelar</button>
+                    <button type="submit">Fechar Chamado</button>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 </html>

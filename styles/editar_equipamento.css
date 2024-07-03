@@ -40,17 +40,12 @@ label {
     font-weight: bold;
 }
 
-input[type="text"], textarea, select {
+input[type="text"], input[type="date"], select {
     width: calc(100% - 22px);
     padding: 10px;
     margin: 5px 0 20px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    box-sizing: border-box;
-}
-
-textarea {
-    resize: vertical; /* Permite redimensionamento vertical */
 }
 
 .buttons {
@@ -68,7 +63,6 @@ button {
     font-size: 14px;
     font-weight: 600;
     transition: all linear 160ms;
-    margin: 5px;
 }
 
 button:hover {

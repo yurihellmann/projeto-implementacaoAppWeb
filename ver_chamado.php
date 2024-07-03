@@ -56,10 +56,10 @@ $conn->close();
                 <p><strong>Descrição do Encerramento:</strong> <?php echo $chamado['descricao_encerramento']; ?></p>
             <?php endif; ?>
             <div class="menu">
+                <button onclick="window.location.href='chamados.php'">Voltar</button>
                 <?php if ($chamado['status'] != 'Fechado'): ?>
                     <button onclick="window.location.href='fechar_chamado.php?id=<?php echo $chamado['id']; ?>'">Fechar Chamado</button>
                 <?php endif; ?>
-                <button onclick="window.location.href='chamados.php'">Voltar</button>
             </div>
         </div>
     </div>

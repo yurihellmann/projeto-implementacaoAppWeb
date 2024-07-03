@@ -20,15 +20,15 @@ $filtro = isset($_GET['filtro']) ? $_GET['filtro'] : 'abertos';
 
 switch ($filtro) {
     case 'fechados':
-        $sql = "SELECT id, titulo, status, data_criacao FROM chamados WHERE status = 'Fechado'";
+        $sql = "SELECT id, titulo, status, data_criacao, modulo, usuario, setor FROM chamados WHERE status = 'Fechado'";
         $titulo = "Chamados Fechados";
         break;
     case 'todos':
-        $sql = "SELECT id, titulo, status, data_criacao FROM chamados";
+        $sql = "SELECT id, titulo, status, data_criacao, modulo, usuario, setor FROM chamados";
         $titulo = "Todos os Chamados";
         break;
     default:
-        $sql = "SELECT id, titulo, status, data_criacao FROM chamados WHERE status != 'Fechado'";
+        $sql = "SELECT id, titulo, status, data_criacao, modulo, usuario, setor FROM chamados WHERE status != 'Fechado'";
         $titulo = "Chamados Abertos";
         break;
 }
@@ -50,8 +50,8 @@ $result = $conn->query($sql);
             <h1><?php echo $titulo; ?></h1>
         </header>
         <div class="menu">
-            <button onclick="window.open('abrir_chamado.html', '_blank')">Abrir Chamado</button>
-            <button onclick="window.open('inventario.php', '_blank')">Gerenciamento de Inventário</button>
+            <button onclick="window.location.href='abrir_chamado.html'">Abrir Chamado</button>
+            <button onclick="window.location.href='inventario.php'">Gerenciamento de Inventário</button>
             <button onclick="window.location.href='logout.php'">Sair</button>
         </div>
         <div class="filtros">
@@ -66,6 +66,9 @@ $result = $conn->query($sql);
                     <th>Título</th>
                     <th>Status</th>
                     <th>Data de Criação</th>
+                    <th>Módulo</th>
+                    <th>Usuário</th>
+                    <th>Setor</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -77,12 +80,15 @@ $result = $conn->query($sql);
                             <td><?php echo $row["titulo"]; ?></td>
                             <td><?php echo $row["status"]; ?></td>
                             <td><?php echo $row["data_criacao"]; ?></td>
-                            <td><a href="ver_chamado.php?id=<?php echo $row['id']; ?>">&#x1F441;</a></td>
+                            <td><?php echo $row["modulo"]; ?></td>
+                            <td><?php echo $row["usuario"]; ?></td>
+                            <td><?php echo $row["setor"]; ?></td>
+                            <td><a href="ver_chamado.php?id=<?php echo $row['id']; ?>">👁️</a></td>
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="5">Nenhum chamado encontrado</td>
+                        <td colspan="8">Nenhum chamado encontrado</td>
                     </tr>
                 <?php endif; ?>
             </tbody>

@@ -25,54 +25,35 @@ header h1 {
     margin: 0;
 }
 
-.formEquipamento {
-    margin-top: 20px;
-    background-color: #f0f0f0;
+.form-container {
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #fff;
     border-radius: 7px;
-    padding: 40px;
     box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.4);
 }
 
-.formEquipamento label {
+label {
     display: block;
-    margin-bottom: 5px;
-    font-weight: 600;
+    margin: 10px 0 5px;
+    font-weight: bold;
 }
 
-.formEquipamento input[type="text"],
-.formEquipamento input[type="date"],
-.formEquipamento select {
-    width: 100%;
+input[type="text"], input[type="date"], select {
+    width: calc(100% - 22px);
     padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
+    margin: 5px 0 20px;
+    border: 1px solid #ddd;
     border-radius: 4px;
-    box-sizing: border-box;
 }
 
-.form-buttons {
+.buttons {
     display: flex;
     justify-content: space-between;
 }
 
-.cancel-button {
-    background-color: #ff4b5c;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 600;
-    transition: all linear 160ms;
-}
-
-.cancel-button:hover {
-    transform: scale(1.05);
-    background-color: #ff1e3c;
-}
-
-.formEquipamento input[type="submit"] {
+button {
     background-color: #6CA80C;
     color: #fff;
     border: none;
@@ -82,9 +63,18 @@ header h1 {
     font-size: 14px;
     font-weight: 600;
     transition: all linear 160ms;
+    margin: 5px;
 }
 
-.formEquipamento input[type="submit"]:hover {
+button:hover {
     transform: scale(1.05);
     background-color: #6CA80C;
+}
+
+.btn-cancelar {
+    background-color: #d9534f;
+}
+
+.btn-cancelar:hover {
+    background-color: #c9302c;
 }
