@@ -80,7 +80,7 @@ $result = $conn->query($sql);
                             <td><?php echo $row["titulo"]; ?></td>
                             <td><?php echo $row["status"]; ?></td>
                             <td><?php echo $row["data_criacao"]; ?></td>
-                            <td><?php echo $row["modulo"]; ?></td>
+                            <td><?php echo ucfirst($row["modulo"]); ?></td>
                             <td><?php echo $row["usuario"]; ?></td>
                             <td><?php echo $row["setor"]; ?></td>
                             <td><a href="ver_chamado.php?id=<?php echo $row['id']; ?>">👁️</a></td>
