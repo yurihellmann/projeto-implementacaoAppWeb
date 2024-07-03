@@ -20,7 +20,8 @@ if ($conn->connect_error) {
 }
 //verifica se ocorreu algum erro na conexão e se houver, exibe uma mensagem e encerra a execução do script
 
-$chamadoId = isset($_GET['id']) ? $_GET['id'] : '';
+//lógica fechamento chamado
+$chamadoId = isset($_GET['id']) ? $_GET['id'] : ''; //captura id do chamado a ser fechado
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST['id'];
@@ -34,11 +35,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Erro ao fechar o chamado: " . $conn->error;
     }
 }
-
+//consulta para obter os detalhes do chamado
 $sql = "SELECT id, titulo, descricao FROM chamados WHERE id = $chamadoId";
 $result = $conn->query($sql);
 $chamado = $result->fetch_assoc();
-
+//consulta para obter os detalhes do chamado
+//lógica fechamento chamado
 $conn->close();
 ?>
 
