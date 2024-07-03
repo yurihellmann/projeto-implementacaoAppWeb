@@ -1,22 +1,24 @@
 <?php
-session_start();
+session_start(); //inicia a sessão
 if (!isset($_SESSION['usuario'])) {
     header("Location: index.html");
     exit();
 }
+// linhas 3 a 6 - verifica se a variável usuario está definida. Caso não esteja, redireciona o usuário novamente a página de login e encerra a conexão com banco de dados
 
+//define as variáveis de conexão com banco de dados: servidor, usuário, senha e nome do banco
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "PROJETO_FACUL";
+//define as variáveis de conexão com banco de dados: servidor, usuário, senha e nome do banco
+$conn = new mysqli($servername, $username, $password, $dbname); // cria nova conexão
 
-// Criando conexão com o banco de dados
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificando a conexão
+//verifica se ocorreu algum erro na conexão e se houver, exibe uma mensagem e encerra a execução do script
 if ($conn->connect_error) {
     die("Erro na conexão com o banco de dados: " . $conn->connect_error);
 }
+//verifica se ocorreu algum erro na conexão e se houver, exibe uma mensagem e encerra a execução do script
 
 // Inicializando variável
 $equipamento = null;
