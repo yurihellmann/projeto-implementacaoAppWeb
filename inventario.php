@@ -1,32 +1,38 @@
-<?php
-session_start();
+<?<?php
+session_start(); //inicia a sessão
 if (!isset($_SESSION['usuario'])) {
     header("Location: index.html");
     exit();
 }
+// linhas 3 a 6 - verifica se a variável usuario está definida. Caso não esteja, redireciona o usuário novamente a página de login e encerra a conexão com banco de dados
 
+//define as variáveis de conexão com banco de dados: servidor, usuário, senha e nome do banco
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "PROJETO_FACUL";
+//define as variáveis de conexão com banco de dados: servidor, usuário, senha e nome do banco
+$conn = new mysqli($servername, $username, $password, $dbname); // cria nova conexão
 
-// Criando a conexão
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificando a conexão
+//verifica se ocorreu algum erro na conexão e se houver, exibe uma mensagem e encerra a execução do script
 if ($conn->connect_error) {
     die("Erro na conexão com o banco de dados: " . $conn->connect_error);
 }
+//verifica se ocorreu algum erro na conexão e se houver, exibe uma mensagem e encerra a execução do script
 
+
+//lógica exclusão de equipamentos
+//declaração de variáveis
 $message = "";
 $showConfirmation = false;
 $deleteId = "";
+//declaração de variáveis
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["delete_id"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST") { //verifica método de requisição == POST
+    if (isset($_POST["delete_id"])) { //se a receber a requisição para excluir, define a variável $deleteId e ativação a exibição da mensagem de confirmação
         $deleteId = $_POST["delete_id"];
         $showConfirmation = true;
-    } elseif (isset($_POST["confirm_delete"])) {
+    } elseif (isset($_POST["confirm_delete"])) { //se a requisição for para confirmar a exclusão, executa a consulta DELETE e define uma mensagem de sucesso ou erro para a exclusão
         $id = $_POST["confirm_delete"];
         $sql = "DELETE FROM equipamentos WHERE id = $id";
         if ($conn->query($sql) === TRUE) {
@@ -36,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+//lógica exclusão de equipamentos
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button onclick="window.location.href='chamados.php'">Gerenciamento de Chamados</button>
             <button onclick="window.location.href='logout.php'">Sair</button>
         </div>
-
+        <!--se houver definição de mensagem da lógica de exclusão, é exibida a mensagem na tela-->
         <?php if ($message): ?>
             <div class="alert"><?php echo $message; ?></div>
         <?php endif; ?>
@@ -104,8 +111,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ?>
             </tbody>
         </table>
-
-        <?php if ($showConfirmation): ?>
+        <!--mensagem de confirmação de exclusão-->
+        <?php if ($showConfirmation): ?> <!--verifica se houve o clique no ícone de exclusão, caso sim, será exibida uma mensagem de confirmação-->
             <div class="overlay">
                 <div class="confirmation-box">
                     <p>Tem certeza que deseja excluir este equipamento?</p>
@@ -117,6 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
         <?php endif; ?>
+        <!--mensagem de confirmação de exclusão-->
     </div>
 </body>
 </html>
