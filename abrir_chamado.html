@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abrir Chamado</title>
+    <link rel="stylesheet" href="styles/abrir_chamado.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Abrir Chamado</h1>
+        </header>
+        <form action="processar_chamado.php" method="post">
+            <div class="form-group">
+                <label for="titulo">Título:</label>
+                <input type="text" id="titulo" name="titulo" required>
+            </div>
+            <div class="form-group">
+                <label for="descricao">Descrição:</label>
+                <textarea id="descricao" name="descricao" rows="5" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="modulo">Módulo:</label>
+                <select id="modulo" name="modulo" required>
+                    <option value="Microinformática">Microinformática</option>
+                    <option value="Infraestrutura">Infraestrutura</option>
+                    <option value="Sistemas">Sistemas</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="usuario">Usuário:</label>
+                <input type="text" id="usuario" name="usuario" required>
+            </div>
+            <div class="form-group">
+                <label for="setor">Setor:</label>
+                <input type="text" id="setor" name="setor" required>
+            </div>
+            <input type="submit" value="Abrir Chamado">
+        </form>
+        <button onclick="window.location.href='chamados.php'">Voltar</button>
+    </div>
+</body>
+</html>

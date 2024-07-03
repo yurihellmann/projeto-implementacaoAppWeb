@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #023047;
+    background-color: #f8f9fa;
+}
+
+.container {
+    width: 99.90%;
+    margin: auto;
+    overflow: hidden;
+}
+
+header {
+    background: #480ca8;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+.menu {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.menu button {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #6CA80C;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 5px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all linear 160ms;
+}
+
+.menu button:hover {
+    transform: scale(1.05);
+    background-color: #6CA80C;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    background-color: #ffffff;
+    border-radius: 5px;
+}
+
+table th, table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+table th {
+    background-color: #480ca8;
+    color: #ffffff;
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.delete-button {
+    color: #ff4b5c;
+    font-size: 16px;
+    text-decoration: none;
+    transition: all linear 160ms;
+    border: none;
+    background: none;
+}
+
+.delete-button:hover {
+    color: #ff1e3c;
+    transform: scale(1.2);
+}
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    width: 300px;
+}
+
+.popup-content h2 {
+    margin: 0 0 10px 0;
+}
+
+.popup-content p {
+    margin: 0 0 20px 0;
+}
+
+.popup-content .btn-confirm {
+    background-color: #6CA80C;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 10px;
+    transition: all linear 160ms;
+}
+
+.popup-content .btn-confirm:hover {
+    transform: scale(1.05);
+    background-color: #6CA80C;
+}
+
+.popup-content .btn-cancel {
+    background-color: #ff4b5c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all linear 160ms;
+}
+
+.popup-content .btn-cancel:hover {
+    transform: scale(1.05);
+    background-color: #ff1e3c;
+}
