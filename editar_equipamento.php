@@ -20,8 +20,10 @@ if ($conn->connect_error) {
 }
 //verifica se ocorreu algum erro na conexão e se houver, exibe uma mensagem e encerra a execução do script
 
-// Inicializando variável
-$equipamento = null;
+//lógica edição de equipamentos
+//declaração de variáveis
+$equipamento = null; //esta variável armazenará os dados do equipamento a ser editado
+//declaração de variáveis
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST['id'];
@@ -49,6 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 }
+//lógica edição de equipamentos
 
 $conn->close();
 ?>
